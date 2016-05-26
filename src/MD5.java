@@ -1,10 +1,7 @@
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by wangtao on 2016-05-25.
- */
+
 public class MD5 {
         public static String encode(byte[] bytes) {
             byte[] hash;

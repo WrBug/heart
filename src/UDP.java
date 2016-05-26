@@ -4,9 +4,7 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 
-/**
- * Created by wangtao on 2016-05-25.
- */
+
 public class UDP {
     private DatagramSocket clientSocket = null;
     private InetSocketAddress serverAddress = null;
@@ -17,20 +15,17 @@ public class UDP {
         serverAddress = new InetSocketAddress(host, port);
         this.data = data;
     }
-
-    public static UDP instance(String host, int port, byte[] data) throws SocketException {
-        return new UDP(host, port, data);
-    }
-
-    public void send() {
-        DatagramPacket packet = null;
+    public static void send(String host, int port, byte[] data) {
         try {
+            UDP udp = new UDP(host, port, data);
+            DatagramPacket packet = null;
             packet = new DatagramPacket(data, data.length,
-                    serverAddress);
-            clientSocket.send(packet);
-            clientSocket.close();
+                    udp.serverAddress);
+            udp.clientSocket.send(packet);
+            udp.clientSocket.close();
         } catch (SocketException e) {
         } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
