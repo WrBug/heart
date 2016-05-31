@@ -29,7 +29,7 @@ public class Heart {
         System.arraycopy(Constant.PRE_PACK_CODE, 0, d, pack.length, Constant.PRE_PACK_CODE.length);
         String sign = MD5.encode(d);
         for (int t = 0, i = 6; i < headPackLen; i++, t += 2) {
-            pack[i] = (byte) (char2hex(sign.charAt(t), 1) + char2hex(sign.charAt(t + 1), 0));
+            pack[i] = (byte) (Integer.parseInt(sign.substring(t, t + 2), 16));
         }
         return pack;
     }
@@ -82,39 +82,11 @@ public class Heart {
     private byte[] time2bytes(long time) {
         String hexTime = Long.toHexString(time);
         byte[] b = new byte[4];
-        b[0] = (byte) (char2hex(hexTime.charAt(0), 1) + char2hex(hexTime.charAt(1), 0));
-        b[1] = (byte) (char2hex(hexTime.charAt(2), 1) + char2hex(hexTime.charAt(3), 0));
-        b[2] = (byte) (char2hex(hexTime.charAt(4), 1) + char2hex(hexTime.charAt(5), 0));
-        b[3] = (byte) (char2hex(hexTime.charAt(6), 1) + char2hex(hexTime.charAt(7), 0));
+        b[0] = (byte) (Integer.parseInt(hexTime.substring(0, 2), 16));
+        b[1] = (byte) (Integer.parseInt(hexTime.substring(2, 4), 16));
+        b[2] = (byte) (Integer.parseInt(hexTime.substring(4, 6), 16));
+        b[3] = (byte) (Integer.parseInt(hexTime.substring(6, 8), 16));
         return b;
-    }
-
-    private int char2hex(char i, int q) {
-        String num = i + "";
-        if (i >= 'a' && i <= 'f') {
-            switch (i) {
-                case 'a':
-                    num = "10";
-                    break;
-                case 'b':
-                    num = "11";
-                    break;
-                case 'c':
-                    num = "12";
-                    break;
-                case 'd':
-                    num = "13";
-                    break;
-                case 'e':
-                    num = "14";
-                    break;
-                case 'f':
-                    num = "15";
-                    break;
-            }
-        }
-        int a = Integer.parseInt(num);
-        return a * (int) Math.pow(16, q);
     }
 
     private byte[] encode(String value) {
